@@ -1,0 +1,109 @@
+<h2 class="p-3 text-center alert alert-primary">Template Driven</h2>
+<div class="container">
+    <div class="row">
+        <div class="col-md-6 offset-md-3 mt-4">
+            <div class="card card-body">
+                <form #signUpForm="ngForm" (ngSubmit)="onSubmitBtn(signUpForm)">
+                    <h3 class="text-center">Signup Form</h3>
+                    <div ngModelGroup="userDetails">
+                        <div class="form-group">
+                            <label for="username"><strong>Username <sup class="color">*</sup></strong></label>
+                            <input name="username" pattern="[a-zA-Z]+" required ngModel type="username" maxlength="8"
+                                minlength="6" class="form-control" id="username" #username="ngModel">
+                            <p class="color" *ngIf="username.touched && username.hasError('required') || username.hasError('pattern') || 
+                            username.hasError('maxlength') || username.hasError('minlength')">
+                                {{content(username)}}
+                            </p>
+                            <ng-container *ngIf="username.dirty">
+                                <!-- <p class="alert alert-danger" *ngIf="username.hasError('pattern')">
+                                    Username should not contain special character and numbers
+                                </p>
+                                <p class="alert alert-danger" *ngIf="username.hasError('minlength')">
+                                    Minimum length should be 6
+                                </p>
+                                <p class="alert alert-danger" *ngIf="username.hasError('maxlength')">
+                                    Maximum length should be 8
+                                </p> -->
+                            </ng-container>
+                        </div>
+                        <div class="form-group">
+                            <label for="Email"><strong>Email <sup class="color">*</sup></strong></label>
+                            <input name="Email" pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}" ngModel
+                                maxlength="17" minlength="15" required type="Email" class="form-control" id="Email"
+                                #email="ngModel">
+                            <p class="color"
+                                *ngIf="email.touched && email.hasError('required') || email.hasError('pattern')">
+                                {{content(email)}}
+                            </p>
+                            <!-- <ng-container *ngIf="email.dirty">
+                                <p class="alert alert-danger" *ngIf="email.hasError('pattern')">
+                                    Email should contain special character and numbers
+                                </p>
+                                <p class="alert alert-danger" *ngIf="email.hasError('minlength')">
+                                    Minimum length should be 16
+                                </p>
+                                <p class="alert alert-danger" *ngIf="email.hasError('maxlength')">
+                                    Maximum length should be 17
+                                </p>
+                            </ng-container> -->
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="secretQuestion"><strong>Secret Question <sup class="color">*</sup></strong> </label>
+                        <select name="secretQuestion" class="form-control" id="secretQuestion" required ngModel
+                            #secretQuestion="ngModel">
+                            <option value="favouriteMovie">Favourite Movie</option>
+                            <option value="favouriteSinger">Favourite Singer</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="answer"><strong>Answer <sup class="color">*</sup></strong> </label>
+                        <input type="text" class="form-control" required ngModel #answer="ngModel" name="answer"
+                            id="answer">
+                    </div>
+                    <div class="form-group">
+                        <label for="isSubscribed">
+                            <input type="checkbox" ngModel #isSubscribed="ngModel" id="isSubscribed"
+                                name="isSubscribed">
+                            <strong class="ml-1">Subscribe to email</strong>
+                        </label>
+                    </div>
+                    <p><strong>Mode of Contact <sup class="color">*</sup></strong> </p>
+                    <!-- <div class="form-group">
+                        <label for="email">
+                            Email :
+                            <input type="radio" ngModel #contactMode="ngModel" 
+                            required name="contactMode" value="email" id="email">
+                        </label>
+                    </div>
+                    <div class="form-group">
+                        <label for="phone">
+                            Phone :
+                            <input type="radio" ngModel #contactMode="ngModel" 
+                            required name="contactMode" value="phone" id="phone">
+                        </label>
+                    </div> -->
+                    <div class="form-group">
+                        <label for="{{modeOfCon.id}}" *ngFor="let modeOfCon of contactMode">
+                            <span class="ml-3 p-1">{{modeOfCon.moc}}</span>
+                            <input type="radio" value="{{modeOfCon.moc}}" id="{{modeOfCon.id}}" name="check"
+                                #check="ngModel" ngModel>
+                        </label>
+                    </div>
+                    <div class="text-right">
+                        <button class="btn btn-outline-info" type="button" (click)="patchVal()"><strong>Patch</strong></button>
+                        <button class="btn btn-outline-success ml-2" type="submit"><strong>Sign Up</strong></button>
+                    </div>
+                    <!-- <div class="text-right">
+                        <button [disabled]="signUpForm.invalid" class="btn btn-outline-success">Sign Up</button>
+                    </div> -->
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6 offset-md-3 mt-4">
+          <strong>{{signUpForm.value | json}}</strong>  
+        </div>
+    </div>
+</div>
